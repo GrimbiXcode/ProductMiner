@@ -1,0 +1,3 @@
+class Foreman
+  def perform: ( :migros, String )-> untyped
+end
