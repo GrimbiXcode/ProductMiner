@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require "httpx"
+require "rest-client"
+require "json"
 
 # A miner for Migros API to fetch product details
 class MigrosApi
@@ -8,20 +9,25 @@ class MigrosApi
     @user_id = nil
     @leshopch_header = ""
     @auth_state = :UNAUTHORIZED
-    @migros_api = HTTPX.with(origin: "https://www.migros.ch")
+    @migros_url = "https://www.migros.ch"
   end
 
-  def migros_headers
-    { headers: { Leshopch: @leshopch_header } }
-  end
-
-  def get_query(id)
-    "?storeType=OFFLINE&warehouseId=2&region=national&migrosIds=#{id}"
+  def migros_headers(id)
+    {
+      Leshopch: @leshopch_header,
+      params: {
+        storeType: "OFFLINE",
+        warehouseId: 2,
+        region: "national",
+        migrosIds: id
+      }
+    }
   end
 
   def authorize
-    response = @migros_api.get("/authentication/public/v1/api/guest?authorizationNotRequired=true")
-    @leshopch_header = response.headers["Leshopch"] || ""
+    response = RestClient.get "#{@migros_url}/authentication/public/v1/api/guest?authorizationNotRequired=true"
+    puts response.headers
+    @leshopch_header = response.headers[:leshopch] || ""
 
     if @leshopch_header == ""
       # raise error
@@ -35,9 +41,8 @@ class MigrosApi
 
   def read_product_details(id)
     authorize if @auth_state == :UNAUTHORIZED
-    response = @migros_api.with(headers: { "Leshopch" => @leshopch_header })
-                          .get("https://www.migros.ch/product-display/public/v2/product-detail#{get_query(id)}")
+    response = RestClient.get "#{@migros_url}/product-display/public/v2/product-detail", migros_headers(id)
     puts "Payload: \n"
-    puts response.json
+    JSON.parse(response.body)
   end
 end
