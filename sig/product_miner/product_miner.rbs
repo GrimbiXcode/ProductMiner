@@ -1,0 +1,5 @@
+module ProductMiner
+  class ProductMiner
+    def mine: -> void
+  end
+end
