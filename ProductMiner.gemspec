@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "lib/ProductMiner/version"
+require_relative "lib/product_miner/version"
 
 Gem::Specification.new do |spec|
   spec.name = "ProductMiner"

@@ -1,0 +1,7 @@
+class MigrosApi
+  @auth_state: :UNAUTHORIZED | :AUTHORIZED
+  @leshopch_header: String
+  @user_id: String?
+
+  def authorize: () -> void
+end
