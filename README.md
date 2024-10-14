@@ -21,19 +21,20 @@ As this is my first Ruby project, I planned the roadmap for my learning rather t
 - [ ] First Miner (reduced features)
     - [x] Initial project setup
     - [ ] Rake configurations
-    - [ ] Implement Migros API
+    - [x] Implement Migros API (Basics)
     - [ ] Basic configurations
         - [ ] Multiple products by ID
         - [ ] Save configurations in the Postgres database
-    - [ ] Scheduler for monitoring tasks
+    - [x] Scheduler for monitoring tasks (Basics)
     - [ ] Record prices in a Postgres database
-- [ ] Website (view price chart by setting)
-    - [ ] Initial RoR setup
+- [x] Website (view price chart by setting)
+    - [x] Initial RoR setup
     - [ ] Simple data viewer
         - [ ] Selection with settings
         - [ ] Linechart of prices over time
     - [ ] Research and decision: pg_timeseries plugin
     - [ ] Tests
+- [ ] DB relation schema, first throw
 - [ ] Website and Miner improvements
     - [ ] CRUD products
     - [ ] Miner settings
