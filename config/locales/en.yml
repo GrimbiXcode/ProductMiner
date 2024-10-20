@@ -29,3 +29,10 @@
 
 en:
   hello: "Hello world"
+  admin:
+    countries:
+      overview:
+        title: "Countries"
+      new:
+        title: "New Country"
+        subtitle: "Create a new country"
