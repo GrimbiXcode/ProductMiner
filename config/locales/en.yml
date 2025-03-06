@@ -36,3 +36,10 @@ en:
       new:
         title: "New Country"
         subtitle: "Create a new country"
+    currencies:
+      title:
+        one: "Currency"
+        many: "Currencies"
+      create:
+        title: "New Currency"
+        subtitle: "Create a new currency"

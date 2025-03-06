@@ -12,12 +12,12 @@
         </tr>
         </thead>
         <tbody>
-        <% @countries.each do |country| %>
+        <% @currencies.each do |currency| %>
           <tr>
-            <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"><%= country.id %></td>
-            <td class="hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= country.name %></td>
+            <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"><%= currency.id %></td>
+            <td class="hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= currency.name %></td>
             <td class="relative whitespace-nowrap border-b border-gray-200 py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-8 lg:pr-8">
-              <a href="<%=country.id %>" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, <%=country.name %></span></a>
+              <a href="<%=currency.id %>" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, <%=currency.name %></span></a>
             </td>
           </tr>
         <% end %>

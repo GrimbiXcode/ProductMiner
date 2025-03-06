@@ -30,6 +30,11 @@ export PG_PASSWORD=<your-password>
 bin/dev
 ```
 
+### DB Setup
+
+Run the `bin/rails db:reset` command to drop the database and set it up again.
+(alt: `bin/rails db:drop db:setup`)
+
 ## Documentation
 
 ### Database schema
