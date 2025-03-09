@@ -1,3 +1,3 @@
 class Currency < ApplicationRecord
-  belongs_to :country
+  has_many :country
 end

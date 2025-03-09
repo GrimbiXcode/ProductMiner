@@ -16,17 +16,17 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_18_204410) do
 
   create_table "countries", force: :cascade do |t|
     t.string "name"
+    t.bigint "currency_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["currency_id"], name: "index_countries_on_currency_id"
   end
 
   create_table "currencies", force: :cascade do |t|
     t.string "name"
     t.string "label"
-    t.bigint "country_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["country_id"], name: "index_currencies_on_country_id"
   end
 
   create_table "manufacturers", force: :cascade do |t|
@@ -99,7 +99,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_18_204410) do
     t.index ["country_id"], name: "index_vendors_on_country_id"
   end
 
-  add_foreign_key "currencies", "countries"
+  add_foreign_key "countries", "currencies"
   add_foreign_key "manufacturers", "countries"
   add_foreign_key "products", "product_types"
   add_foreign_key "selling_data", "selling_units"

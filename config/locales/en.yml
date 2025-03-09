@@ -28,18 +28,27 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
   admin:
     countries:
-      overview:
-        title: "Countries"
-      new:
+      title:
+        one: "Country"
+        many: "Countries"
+      form:
         title: "New Country"
         subtitle: "Create a new country"
+        name: "Land's name"
+        currency: "Main currency"
+        flag_image: "Image of the country's flag"
     currencies:
       title:
         one: "Currency"
         many: "Currencies"
-      create:
+      overview:
+        name: "Name"
+        label: "Label"
+        country: "Used in"
+      form:
         title: "New Currency"
         subtitle: "Create a new currency"
+        name: "Name of the currency"
+        label: "Short label"

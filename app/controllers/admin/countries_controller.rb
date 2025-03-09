@@ -3,6 +3,10 @@ class Admin::CountriesController < AdminController
     @countries = Country.all
   end
 
+  def show
+    @country = Country.find(params[:id])
+  end
+
   def new
     @country = Country.new
   end
@@ -18,6 +22,6 @@ class Admin::CountriesController < AdminController
 
   private
   def country_params
-    params.require(:name)
+    params.require(:country).permit(:name)
   end
 end

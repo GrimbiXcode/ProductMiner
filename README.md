@@ -35,6 +35,8 @@ bin/dev
 Run the `bin/rails db:reset` command to drop the database and set it up again.
 (alt: `bin/rails db:drop db:setup`)
 
+After this, use `bin/rails db:migrate` to create the database schema.
+
 ## Documentation
 
 ### Database schema

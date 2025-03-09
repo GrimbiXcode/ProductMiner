@@ -18,6 +18,6 @@ class Admin::CurrenciesController < AdminController
 
   private
   def currency_params
-    params.require(:name)
+    params.require(:currency).permit(:name, :label)
   end
 end
