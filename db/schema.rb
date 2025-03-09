@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_18_204410) do
 
   create_table "countries", force: :cascade do |t|
     t.string "name"
-    t.bigint "currency_id", null: false
+    t.bigint "currency_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["currency_id"], name: "index_countries_on_currency_id"

@@ -8,10 +8,16 @@
           <%= form.label :name, t("admin.countries.form.name"), class: "block text-sm/6 font-medium text-gray-900" %>
           <%= form.text_field :name, placeholder: "Switzerland", autocomplete: "off", class: "block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
           <% @country.errors.full_messages_for(:name).each do |message| %>
-            <p class="mt-2 text-sm text-red-600" id="email-error"><%= message %></p>
+            <p class="mt-2 text-sm text-red-600" id="name-error"><%= message %></p>
           <% end %>
           <%= form.label :currency, t("admin.countries.form.currency"), class: "block text-sm/6 font-medium text-gray-900" %>
-          <%= form.select :currency %>
+          <%= form.collection_select :currency_id, Currency.all, :id, :name, { include_blank: t("admin.countries.form.blank_currency") }, { class: "col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" } %>
+          <% @country.errors.full_messages_for(:currency_id).each do |message| %>
+            <p class="mt-2 text-sm text-red-600" id="currency-error"><%= message %></p>
+          <% end %>
+          <% @country.errors.full_messages.each do |message| %>
+            <p class="mt-2 text-sm text-red-600" id="all-error"><%= message %></p>
+          <% end %>
         </div>
         <div class="col-span-full">
           <label for="cover-photo" class="block text-sm/6 font-medium text-gray-900"><%= t "admin.countries.form.flag_image" %></label>

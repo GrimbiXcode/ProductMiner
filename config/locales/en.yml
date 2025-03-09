@@ -38,6 +38,7 @@ en:
         subtitle: "Create a new country"
         name: "Land's name"
         currency: "Main currency"
+        blank_currency: "- blank -"
         flag_image: "Image of the country's flag"
     currencies:
       title:

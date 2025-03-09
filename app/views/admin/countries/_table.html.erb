@@ -1,3 +1,12 @@
+<%
+  def currency_name(currency)
+    if currency.present?
+      currency.name + " (" + currency.label + ")"
+    else
+      "No currency"
+    end
+  end
+%>
 <div class="mt-8 flow-root">
   <div class="-mx-4 -my-2 sm:-mx-6 lg:-mx-8">
     <div class="inline-block min-w-full py-2 align-middle">
@@ -17,7 +26,7 @@
           <tr>
             <td class="whitespace-nowrap border-b border-gray-200 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8"><%= country.id %></td>
             <td class="hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= country.name %></td>
-            <td class="hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= country.currency %></td>
+            <td class="hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= currency_name country.currency %></td>
             <td class="relative whitespace-nowrap border-b border-gray-200 py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-8 lg:pr-8">
               <a href="<%=country.id %>" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, <%=country.name %></span></a>
             </td>

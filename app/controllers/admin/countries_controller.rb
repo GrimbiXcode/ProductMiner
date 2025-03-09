@@ -1,6 +1,6 @@
 class Admin::CountriesController < AdminController
   def index
-    @countries = Country.all
+    @countries = Country.left_joins(:currency).all
   end
 
   def show
@@ -22,6 +22,6 @@ class Admin::CountriesController < AdminController
 
   private
   def country_params
-    params.require(:country).permit(:name)
+    params.require(:country).permit(:name, :currency_id)
   end
 end
