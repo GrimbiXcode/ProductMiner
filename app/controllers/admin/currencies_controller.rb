@@ -16,6 +16,19 @@ class Admin::CurrenciesController < AdminController
     end
   end
 
+  def edit
+    @currency = Currency.find(params[:id])
+  end
+
+  def update
+    @currency = Currency.find(params[:id])
+    if @currency.update(currency_params)
+      redirect_to admin_currencies_path
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
   def currency_params
     params.require(:currency).permit(:name, :label)

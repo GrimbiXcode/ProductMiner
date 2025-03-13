@@ -21,7 +21,9 @@
             <td class="hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= currency.label %></td>
             <td class="hidden whitespace-nowrap border-b border-gray-200 px-3 py-4 text-sm text-gray-500 sm:table-cell"><%= currency.country.name %></td>
             <td class="relative whitespace-nowrap border-b border-gray-200 py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-8 lg:pr-8">
-              <a href="<%=currency.id %>" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, <%=currency.name %></span></a>
+              <%= link_to(edit_admin_currency_path(currency), class: "text-indigo-600 hover:text-indigo-900") do %>
+                Edit<span class="sr-only">, <%=currency.name %></span>
+              <% end %>
             </td>
           </tr>
         <% end %>

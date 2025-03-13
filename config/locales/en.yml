@@ -33,9 +33,11 @@ en:
       title:
         one: "Country"
         many: "Countries"
-      form:
+      new:
         title: "New Country"
-        subtitle: "Create a new country"
+      edit:
+        title: "Edit Country"
+      form:
         name: "Land's name"
         currency: "Main currency"
         blank_currency: "- blank -"
