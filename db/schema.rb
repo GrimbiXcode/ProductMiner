@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_18_204410) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_23_233219) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,26 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_18_204410) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["product_type_id"], name: "index_products_on_product_type_id"
+  end
+
+  create_table "relation_types", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.text "formula"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "relations", force: :cascade do |t|
+    t.bigint "source_product_id"
+    t.bigint "destination_product_id"
+    t.bigint "relation_type_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["destination_product_id"], name: "index_relations_on_destination_product_id"
+    t.index ["relation_type_id"], name: "index_relations_on_relation_type_id"
+    t.index ["source_product_id", "destination_product_id", "relation_type_id"], name: "idx_on_source_product_id_destination_product_id_rel_80373bcedc", unique: true
+    t.index ["source_product_id"], name: "index_relations_on_source_product_id"
   end
 
   create_table "selling_data", force: :cascade do |t|
@@ -102,6 +122,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_18_204410) do
   add_foreign_key "countries", "currencies"
   add_foreign_key "manufacturers", "countries"
   add_foreign_key "products", "product_types"
+  add_foreign_key "relations", "products", column: "destination_product_id"
+  add_foreign_key "relations", "products", column: "source_product_id"
+  add_foreign_key "relations", "relation_types"
   add_foreign_key "selling_data", "selling_units"
   add_foreign_key "selling_units", "currencies"
   add_foreign_key "selling_units", "manufacturers"
