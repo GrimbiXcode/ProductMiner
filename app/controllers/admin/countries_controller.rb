@@ -1,6 +1,19 @@
 class Admin::CountriesController < AdminController
   def index
-    @countries = Country.left_joins(:currency).all.order(:name).page(params[:page])
+    allowed_sorts = %w[id name currency]
+    @sort = allowed_sorts.include?(params[:sort]) ? params[:sort] : 'id'
+    @direction = %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+
+    scope = Country.left_joins(:currency)
+
+    order_clause = if @sort == 'currency'
+                     "currencies.name #{@direction}"
+                   else
+                     "countries.#{@sort} #{@direction}"
+                   end
+
+    @countries = scope.order(order_clause)
+    @countries = @countries.page(params[:page]) if @countries.respond_to?(:page)
   end
 
   def show
@@ -31,6 +44,12 @@ class Admin::CountriesController < AdminController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @country = Country.find(params[:id])
+    @country.destroy
+    redirect_to admin_countries_path
   end
 
   private

@@ -37,6 +37,12 @@ class Admin::CurrenciesController < AdminController
     end
   end
 
+  def destroy
+    @currency = Currency.find(params[:id])
+    @currency.destroy
+    redirect_to admin_currencies_path
+  end
+
   private
   def currency_params
     params.require(:currency).permit(:name, :label)
