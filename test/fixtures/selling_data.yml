@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  selling_unit_id: <%= ActiveRecord::FixtureSet.identify(:one) %>
+  recorded_at: 2024-10-18 22:44:10
+  value: 9.99
+  created_at: 2024-10-18 22:44:10
+  updated_at: 2024-10-18 22:44:10
+
+two:
+  selling_unit_id: <%= ActiveRecord::FixtureSet.identify(:two) %>
+  recorded_at: 2024-10-18 22:44:10
+  value: 12.99
+  created_at: 2024-10-18 22:44:10
+  updated_at: 2024-10-18 22:44:10
