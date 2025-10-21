@@ -3,9 +3,7 @@
 one:
   name: MyString
   label: MyString
-  country: one
 
 two:
   name: MyString
   label: MyString
-  country: two

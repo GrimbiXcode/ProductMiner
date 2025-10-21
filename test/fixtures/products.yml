@@ -3,13 +3,11 @@
 one:
   name: MyString
   description: MyString
-  description: MyString
   details: MyString
   product_type: one
 
 two:
   name: MyString
-  description: MyString
   description: MyString
   details: MyString
   product_type: two

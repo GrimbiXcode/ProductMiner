@@ -9,6 +9,9 @@ module ActiveSupport
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
+    
+    # Explicitly map the selling_data fixture to the SellingData class
+    set_fixture_class selling_data: SellingData
 
     # Add more helper methods to be used by all tests here...
   end

@@ -2,6 +2,8 @@
 
 one:
   name: MyString
+  currency: one
 
 two:
   name: MyString
+  currency: two
