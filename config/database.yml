@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: localhost
+  port: 5432
+  database: product_miner
+  username: postgres
+  password: your_password
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  database: product_miner_test
+
+production:
+  <<: *default
+  database: product_miner_production
