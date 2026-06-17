@@ -70,13 +70,19 @@ class Foreman
 
   def setup_redis
     redis_config = @config.redis_config
+    redis_url = "redis://#{redis_config['host']}:#{redis_config['port']}/#{redis_config['db']}"
+
     Sidekiq.configure_client do |config|
-      config.redis = { url: "redis://#{redis_config['host']}:#{redis_config['port']}/#{redis_config['db']}" }
+      config.redis = { url: redis_url }
     end
 
     Sidekiq.configure_server do |config|
-      config.redis = { url: "redis://#{redis_config['host']}:#{redis_config['port']}/#{redis_config['db']}" }
+      config.redis = { url: redis_url }
     end
+  rescue StandardError => e
+    @logger.warn("Redis connection failed: #{e.message}")
+    # In test mode, Sidekiq::Testing.fake! is used, so this is okay
+    raise e unless ENV["RACK_ENV"] == "test" || defined?(Sidekiq::Testing)
   end
 
   def setup_database

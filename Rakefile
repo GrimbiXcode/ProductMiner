@@ -15,6 +15,7 @@ end
 RSpec::Core::RakeTask.new(:spec) do |task|
   task.pattern = "spec/**/*_spec.rb"
   task.rspec_opts = ["--color", "--format", "documentation"]
+  task.env = { "RACK_ENV" => "test" }
 end
 
 task :test => :spec

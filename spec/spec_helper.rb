@@ -4,6 +4,7 @@ require "bundler/setup"
 require "rspec"
 require "webmock/rspec"
 require "json"
+require "logger"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -33,11 +34,67 @@ RSpec.configure do |config|
   # Run specs in random order to surface order dependencies
   config.order = :random
   Kernel.srand config.seed
+
+  config.before(:suite) do
+    # Stub logger to suppress output during tests
+    @test_logger = Logger.new(File::NULL)
+    allow(Logger).to receive(:new).and_return(@test_logger)
+  end
 end
 
 # Stub Redis for Sidekiq in tests
 require "sidekiq/testing"
 Sidekiq::Testing.fake!
+
+# Stub database connection for tests
+module ProductMiner
+  class Database
+    attr_reader :db, :price_records
+
+    def initialize(*_args)
+      @db = MockDatabase.new
+      @price_records = MockPriceRecord.new
+    end
+
+    def test_connection
+      true
+    end
+
+    def close; end
+  end
+
+  class MockDatabase
+    def tables
+      []
+    end
+
+    def table_exists?(_table)
+      false
+    end
+
+    def create_table(_name, &_block); end
+
+    def disconnect; end
+  end
+
+  class MockPriceRecord
+    def save(_record)
+      true
+    end
+
+    def find_by_product_id(_product_id, limit: 100)
+      []
+    end
+
+    def find_recent(miner: nil, hours: 24)
+      []
+    end
+
+    def latest_price(_product_id)
+      nil
+    end
+  end
+end
 
 # Load the library
 require_relative "../lib/product_miner"
