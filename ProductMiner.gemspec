@@ -33,14 +33,19 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # Runtime dependencies
+  spec.add_dependency "rest-client", "~> 2.1"
+  spec.add_dependency "sidekiq", "~> 7.2"
+  spec.add_dependency "sidekiq-cron", "~> 1.12"
+  spec.add_dependency "json", "~> 2.7"
   spec.add_dependency "sequel", "~> 5.0"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
 
   # Development dependencies
-  spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'webmock'
+  spec.add_development_dependency 'rspec', "~> 3.0"
+  spec.add_development_dependency 'rake', "~> 13.0"
+  spec.add_development_dependency 'rubocop', "~> 1.21"
+  spec.add_development_dependency 'webmock', "~> 3.0"
   spec.add_development_dependency 'pg'
 end
