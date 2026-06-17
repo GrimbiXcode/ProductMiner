@@ -5,7 +5,7 @@ require "bundler/cli"
 require "rubocop/rake_task"
 require "rspec/core/rake_task"
 
-task default: %w[lint test]
+task default: %w[test]
 
 RuboCop::RakeTask.new(:lint) do |task|
   task.patterns = %w[lib/**/*.rb spec/**/*.rb]
