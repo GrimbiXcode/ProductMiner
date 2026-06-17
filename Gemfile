@@ -16,3 +16,8 @@ gem "sidekiq", "~> 7.2"
 gem "sidekiq-cron", "~> 1.12"
 
 gem "json", "~> 2.7"
+
+# Development dependencies for testing
+gem "rspec", "~> 3.0"
+gem "webmock", "~> 3.0"
+gem "sequel", "~> 5.0"

@@ -5,15 +5,19 @@ require "bundler/cli"
 require "rubocop/rake_task"
 require "rspec/core/rake_task"
 
-task default: %w[lint]
-# task default: %w[lint test]
+task default: %w[lint test]
 
 RuboCop::RakeTask.new(:lint) do |task|
-  task.patterns = %w[lib/**/*.rb test/**/*.rb]
+  task.patterns = %w[lib/**/*.rb spec/**/*.rb]
   task.fail_on_error = false
 end
 
-task default: :spec
+RSpec::Core::RakeTask.new(:spec) do |task|
+  task.pattern = "spec/**/*_spec.rb"
+  task.rspec_opts = ["--color", "--format", "documentation"]
+end
+
+task :test => :spec
 
 namespace :sidekiq do
   task all: %w[install run]
@@ -23,7 +27,7 @@ namespace :sidekiq do
   end
 
   task :run do
-    exec "sidekiq -r ./lib/product_miner/foreman/foreman.rb"
+    exec "sidekiq -r ./lib/product_miner.rb"
   end
 end
 
@@ -38,5 +42,36 @@ namespace :miner do
 
   task :test do
     exec "irb -r ./lib/product_miner/miners/test.rb"
+  end
+end
+
+namespace :db do
+  desc "Create database and tables"
+  task :setup do
+    require_relative "lib/product_miner/database"
+    require_relative "lib/product_miner/config"
+    
+    config = ProductMiner::Config.new
+    db = ProductMiner::Database.new(config)
+    
+    puts "Database connection established"
+    puts "Tables: #{db.db.tables}"
+  end
+
+  desc "Test database connection"
+  task :test do
+    require_relative "lib/product_miner/database"
+    require_relative "lib/product_miner/config"
+    
+    config = ProductMiner::Config.new
+    db = ProductMiner::Database.new(config)
+    
+    begin
+      db.test_connection
+      puts "✓ Database connection successful"
+    rescue => e
+      puts "✗ Database connection failed: #{e.message}"
+      exit 1
+    end
   end
 end
