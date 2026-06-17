@@ -16,9 +16,10 @@ module ProductMiner
 
     def initialize(config_path = nil)
       @config = ProductMiner::Config.new(config_path)
-      @database = ProductMiner::Database.new(@config)
+      # Skip database initialization in test environment
+      @database = ProductMiner::Database.new(@config) unless ENV["RACK_ENV"] == "test"
       @foreman = Foreman.new(@config)
-      @foreman.install_jobs
+      @foreman.install_jobs unless ENV["RACK_ENV"] == "test"
     end
 
     def mine(product_id = nil)

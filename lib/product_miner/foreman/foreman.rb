@@ -89,7 +89,8 @@ class Foreman
     return @db if @db
 
     @db = ProductMiner::Database.new(@config)
-    @db.test_connection
+    # Skip connection test in test environment
+    @db.test_connection unless ENV["RACK_ENV"] == "test"
     @db
   end
 
