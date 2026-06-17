@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "spec_helper"
+require_relative "../../lib/product_miner/miners/migros_api"
 
 RSpec.describe MigrosApi do
   let(:migros_api) { described_class.new }
