@@ -2,6 +2,39 @@
 
 require "spec_helper"
 require_relative "../../lib/product_miner/config"
+
+# Mock Database for tests
+module ProductMiner
+  class Database
+    attr_reader :db, :price_records
+
+    def initialize(*_args)
+      @db = MockDB.new
+      @price_records = MockPriceRecord.new
+    end
+
+    def test_connection
+      true
+    end
+
+    def close; end
+
+    class MockDB
+      def test_connection
+        true
+      end
+
+      def disconnect; end
+    end
+
+    class MockPriceRecord
+      def save(_record)
+        true
+      end
+    end
+  end
+end
+
 require_relative "../../lib/product_miner/foreman/foreman"
 
 RSpec.describe Foreman do
