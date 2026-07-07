@@ -4,6 +4,7 @@ require "bundler/setup"
 require "rspec"
 require "webmock/rspec"
 require "json"
+require "timecop"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -33,6 +34,17 @@ RSpec.configure do |config|
   # Run specs in random order to surface order dependencies
   config.order = :random
   Kernel.srand config.seed
+
+  # Set test environment
+  config.before(:suite) do
+    ENV["RACK_ENV"] = "test"
+    Sidekiq::Testing.fake!
+  end
+
+  config.after(:suite) do
+    WebMock.disable!
+    Timecop.return
+  end
 end
 
 # Stub Redis for Sidekiq in tests

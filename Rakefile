@@ -5,7 +5,7 @@ require "bundler/cli"
 require "rubocop/rake_task"
 require "rspec/core/rake_task"
 
-task default: %w[lint]
+task default: %w[lint test]
 
 RuboCop::RakeTask.new(:lint) do |task|
   task.patterns = %w[lib/**/*.rb spec/**/*.rb]
@@ -69,10 +69,38 @@ namespace :db do
     
     begin
       db.test_connection
-      puts "✓ Database connection successful"
+      puts "\u2713 Database connection successful"
     rescue => e
-      puts "✗ Database connection failed: #{e.message}"
+      puts "\u2717 Database connection failed: #{e.message}"
       exit 1
     end
+  end
+
+  desc "Create test database"
+  task :create_test_db do
+    require_relative "lib/product_miner/database"
+    require_relative "lib/product_miner/config"
+    
+    # Use SQLite for testing
+    test_config = ProductMiner::Config.new("config/test.yml")
+    db = ProductMiner::Database.new(test_config)
+    
+    puts "Test database created"
+    puts "Tables: #{db.db.tables}"
+  end
+end
+
+namespace :ci do
+  desc "Run CI checks"
+  task :checks do
+    sh "bundle exec rubocop lib/ spec/"
+    sh "bundle exec rspec spec/"
+  end
+
+  desc "Run full CI pipeline"
+  task :pipeline do
+    sh "bundle install"
+    sh "bundle exec rubocop lib/ spec/"
+    sh "bundle exec rspec spec/"
   end
 end

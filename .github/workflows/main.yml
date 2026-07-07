@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - main
-
+      - vibe/**
   pull_request:
     branches:
       - main
+      - vibe/**
 
 jobs:
   build:
@@ -19,7 +20,7 @@ jobs:
           - '3.2.4'
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
@@ -29,3 +30,7 @@ jobs:
       run: bundle install
     - name: Run the default task
       run: bundle exec rake
+    - name: Run tests
+      env:
+        RACK_ENV: test
+      run: bundle exec rspec spec/ --format documentation --color
