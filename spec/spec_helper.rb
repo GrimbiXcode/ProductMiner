@@ -5,6 +5,14 @@ require "rspec"
 require "webmock/rspec"
 require "json"
 
+# Load the main library first to ensure all dependencies are available
+begin
+  require_relative "../lib/product_miner"
+rescue LoadError => e
+  # If loading fails, we'll load individual files in tests
+  puts "Warning: Could not load main library: #{e.message}"
+end
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[File.join(__dir__, "support", "**", "*.rb")].sort.each { |f| require f }

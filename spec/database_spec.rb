@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-require_relative "../lib/product_miner/database"
+require "sequel"
 require_relative "../lib/product_miner/config"
+require_relative "../lib/product_miner/models/price_record"
+require_relative "../lib/product_miner/database"
 
 RSpec.describe ProductMiner::Database do
   let(:config) do

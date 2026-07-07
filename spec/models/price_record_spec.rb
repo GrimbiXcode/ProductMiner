@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "spec_helper"
-require_relative "../../lib/product_miner/models/price_record"
 require "sequel"
+require_relative "../../lib/product_miner/models/price_record"
 
 RSpec.describe ProductMiner::Models::PriceRecord do
   let(:db) { Sequel.sqlite(:memory:) }
