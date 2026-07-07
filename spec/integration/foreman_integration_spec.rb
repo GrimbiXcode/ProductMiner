@@ -4,7 +4,6 @@ require "spec_helper"
 require_relative "../../lib/product_miner/foreman/foreman"
 require_relative "../../lib/product_miner/config"
 require_relative "../../lib/product_miner/database"
-require_relative "../support/database_helpers"
 
 RSpec.describe "Foreman Integration", type: :integration do
   let(:test_config) do

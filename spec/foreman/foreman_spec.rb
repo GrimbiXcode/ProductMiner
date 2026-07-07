@@ -5,9 +5,52 @@ require_relative "../../lib/product_miner/foreman/foreman"
 require_relative "../../lib/product_miner/config"
 require_relative "../../lib/product_miner/database"
 
+# Simple config class for testing
+class SimpleConfig
+  def initialize(data)
+    @data = data
+  end
+
+  def redis_config
+    @data["redis"]
+  end
+
+  def database_config
+    @data["database"]
+  end
+
+  def products
+    @data["products"]
+  end
+
+  def enabled_products
+    products.select { |p| p["enabled"] != false }
+  end
+
+  def scheduler_config
+    @data["scheduler"]
+  end
+
+  def miner_config(miner_name)
+    @data.dig("miners", miner_name) || {}
+  end
+
+  def logging_config
+    @data["logging"] || { level: "info" }
+  end
+
+  def [](key)
+    @data[key]
+  end
+
+  def dig(*keys)
+    @data.dig(*keys)
+  end
+end
+
 RSpec.describe Foreman do
-  let(:config) do
-    config_data = {
+  let(:config_data) do
+    {
       "redis" => { "host" => "localhost", "port" => 6379, "db" => 1 },
       "database" => { "adapter" => "sqlite", "database" => ":memory:" },
       "products" => [
@@ -17,18 +60,9 @@ RSpec.describe Foreman do
         "migros" => { "cron" => "* * * * *", "enabled" => true }
       }
     }
-    
-    # Create a mock config
-    double("Config", 
-      redis_config: config_data["redis"],
-      database_config: config_data["database"],
-      products: config_data["products"],
-      enabled_products: config_data["products"],
-      scheduler_config: config_data["scheduler"],
-      miner_config: ->(miner) { config_data.dig("miners", miner) || {} }
-    )
   end
 
+  let(:config) { SimpleConfig.new(config_data) }
   let(:foreman) { described_class.new(config) }
 
   describe "#initialize" do

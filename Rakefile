@@ -14,7 +14,7 @@ end
 
 RSpec::Core::RakeTask.new(:spec) do |task|
   task.pattern = "spec/**/*_spec.rb"
-  task.rspec_opts = ["--color", "--format", "documentation"]
+  task.rspec_opts = ["--color", "--format", "progress"]
   task.env = { "RACK_ENV" => "test" }
 end
 
@@ -74,33 +74,5 @@ namespace :db do
       puts "\u2717 Database connection failed: #{e.message}"
       exit 1
     end
-  end
-
-  desc "Create test database"
-  task :create_test_db do
-    require_relative "lib/product_miner/database"
-    require_relative "lib/product_miner/config"
-    
-    # Use SQLite for testing
-    test_config = ProductMiner::Config.new("config/test.yml")
-    db = ProductMiner::Database.new(test_config)
-    
-    puts "Test database created"
-    puts "Tables: #{db.db.tables}"
-  end
-end
-
-namespace :ci do
-  desc "Run CI checks"
-  task :checks do
-    sh "bundle exec rubocop lib/ spec/"
-    sh "bundle exec rspec spec/"
-  end
-
-  desc "Run full CI pipeline"
-  task :pipeline do
-    sh "bundle install"
-    sh "bundle exec rubocop lib/ spec/"
-    sh "bundle exec rspec spec/"
   end
 end

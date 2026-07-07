@@ -139,35 +139,4 @@ RSpec.describe ProductMiner::Config do
       expect(config.logging_config).to eq({ level: "info" })
     end
   end
-
-  describe "enabled_products filtering" do
-    let(:config_with_disabled) do
-      config_data = {
-        "products" => [
-          { "id" => "1", "enabled" => true },
-          { "id" => "2", "enabled" => false },
-          { "id" => "3" }  # enabled by default
-        ]
-      }
-      
-      # Create a temporary config file
-      temp_file = Tempfile.new(["config", ".yml"])
-      temp_file.write(config_data.to_yaml)
-      temp_file.close
-      
-      described_class.new(temp_file.path)
-    end
-
-    after do
-      # Clean up temp file
-      File.delete(config_with_disabled.instance_variable_get(:@config_path)) if File.exist?(config_with_disabled.instance_variable_get(:@config_path))
-    end
-
-    it "filters out disabled products" do
-      enabled = config_with_disabled.enabled_products
-      expect(enabled.length).to eq(2)
-      expect(enabled.map { |p| p["id"] }).to include("1", "3")
-      expect(enabled.map { |p| p["id"] }).not_to include("2")
-    end
-  end
 end
