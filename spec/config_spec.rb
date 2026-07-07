@@ -4,7 +4,7 @@ require "spec_helper"
 require_relative "../lib/product_miner/config"
 
 RSpec.describe ProductMiner::Config do
-  let(:config_path) { File.expand_path("../../../config/default.yml", __FILE__) }
+  let(:config_path) { File.expand_path("../../config/default.yml", __FILE__) }
   let(:config) { described_class.new(config_path) }
 
   describe "#initialize" do

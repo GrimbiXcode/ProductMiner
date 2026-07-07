@@ -46,8 +46,9 @@ module ProductMiner
       end
 
       def find_recent(miner: nil, hours: 24)
+        cutoff = Time.now.utc - (hours * 3600)
         query = @db[:price_records]
-                   .where { recorded_at > Sequel::CURRENT_TIMESTAMP - (hours * 3600) }
+                   .where { recorded_at > cutoff }
                    .order(:recorded_at)
         query = query.where(miner: miner) if miner
         query.all

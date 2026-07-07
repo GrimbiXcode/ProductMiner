@@ -121,7 +121,7 @@ class Foreman
       recorded_at: Time.now.utc
     }
 
-    @db.price_records.save(record)
+    setup_database.price_records.save(record)
   end
 
   def extract_price(data)

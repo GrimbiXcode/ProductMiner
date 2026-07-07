@@ -5,7 +5,7 @@ require "sequel"
 require_relative "../../lib/product_miner/models/price_record"
 
 RSpec.describe ProductMiner::Models::PriceRecord do
-  let(:db) { Sequel.sqlite(:memory:) }
+  let(:db) { Sequel.sqlite }
   let(:price_record) { described_class.new(db) }
 
   describe "#initialize" do
@@ -14,12 +14,13 @@ RSpec.describe ProductMiner::Models::PriceRecord do
     end
 
     it "creates table on initialization" do
+      price_record # trigger lazy initialization
       expect(db.table_exists?(:price_records)).to be true
     end
   end
 
   describe "#create_table" do
-    let(:new_db) { Sequel.sqlite(:memory:) }
+    let(:new_db) { Sequel.sqlite }
     let(:new_price_record) { described_class.new(new_db) }
 
     before do
@@ -28,8 +29,8 @@ RSpec.describe ProductMiner::Models::PriceRecord do
     end
 
     it "creates price_records table with all required columns" do
-      new_price_record.create_table
-      
+      new_price_record # triggers create_table via initialize
+
       table = new_db[:price_records]
       columns = table.columns.map(&:to_s)
       
@@ -45,11 +46,11 @@ RSpec.describe ProductMiner::Models::PriceRecord do
     end
 
     it "creates indexes" do
-      new_price_record.create_table
-      
+      new_price_record # triggers create_table via initialize
+
       indexes = new_db.indexes(:price_records)
-      index_names = indexes.map { |name, _| name }
-      
+      index_names = indexes.map { |name, _| name.to_s }
+
       expect(index_names).to include("price_records_product_id_recorded_at_index")
       expect(index_names).to include("price_records_miner_recorded_at_index")
     end
@@ -61,7 +62,7 @@ RSpec.describe ProductMiner::Models::PriceRecord do
     end
 
     it "returns false when table does not exist" do
-      new_db = Sequel.sqlite(:memory:)
+      new_db = Sequel.sqlite
       new_price_record = described_class.new(new_db)
       new_db.drop_table?(:price_records)
       expect(new_price_record.table_exists?).to be false

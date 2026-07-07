@@ -8,8 +8,6 @@
 # Read more about this file here:
 # https://docs.rubocop.org/rubocop/configuration.html
 
-inherit_from: .rubocop.yml
-
 # Offense count: 1
 # Configuration parameters: AllowComments, AllowEmptyLambdas.
 Lint/EmptyBlock:
@@ -32,7 +30,7 @@ Naming/MethodName:
 # Offense count: 1
 # Configuration parameters: MinNameLength, AllowNamesEndingWithNumbers, AllowedNames, ForbiddenNames.
 # AllowedNames: io, id, to, by, on, in, at, ip, db
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   Exclude:
     - 'lib/product_miner.rb'
 

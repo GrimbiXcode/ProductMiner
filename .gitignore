@@ -23,3 +23,7 @@ config/*.override.yml
 # Environment variables
 .env
 .env.*
+
+# Bundler / RSpec generated files
+/Gemfile.lock
+.rspec_status

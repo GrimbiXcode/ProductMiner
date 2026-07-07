@@ -4,7 +4,7 @@ require "sequel"
 
 module DatabaseHelpers
   def setup_test_database
-    @test_db = Sequel.sqlite(:memory:)
+    @test_db = Sequel.sqlite
     
     # Create all necessary tables
     @test_db.create_table :price_records do

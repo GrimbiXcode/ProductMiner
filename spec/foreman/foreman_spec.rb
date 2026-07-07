@@ -166,7 +166,9 @@ RSpec.describe Foreman do
     end
 
     it "logs job installation" do
-      expect(foreman.instance_variable_get(:@logger)).to receive(:info).with(/Installing job: Migros Miner - 204451300000/)
+      logger = foreman.instance_variable_get(:@logger)
+      allow(logger).to receive(:info)
+      expect(logger).to receive(:info).with(/Installing job: Migros Miner - 204451300000/)
       foreman.install_jobs
     end
   end
