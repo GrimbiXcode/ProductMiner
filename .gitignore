@@ -7,3 +7,23 @@
 /spec/reports/
 /tmp/
 /.idea/
+
+# Logs
+/log/
+*.log
+
+# Database
+*.db
+*.sqlite
+
+# Config overrides
+config/*.local.yml
+config/*.override.yml
+
+# Environment variables
+.env
+.env.*
+
+# Bundler / RSpec generated files
+/Gemfile.lock
+.rspec_status

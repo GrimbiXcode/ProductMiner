@@ -1,0 +1,43 @@
+# Test Configuration for ProductMiner
+# Used in test environment
+
+# Redis configuration for Sidekiq
+redis:
+  host: localhost
+  port: 6379
+  db: 1
+
+# Database configuration for price storage (SQLite for testing)
+database:
+  adapter: sqlite
+  database: ":memory:"
+
+# Miners configuration
+miners:
+  migros:
+    enabled: true
+    base_url: "https://www.migros.ch"
+    auth_endpoint: "/authentication/public/v1/api/guest"
+    product_endpoint: "/product-display/public/v2/product-detail"
+    default_params:
+      storeType: "OFFLINE"
+      warehouseId: 2
+      region: "national"
+
+# Products to monitor (array of product IDs)
+products:
+  - id: "204451300000"
+    name: "Test Product"
+    miner: migros
+    enabled: true
+
+# Scheduler configuration
+scheduler:
+  migros:
+    cron: "* * * * *"  # Every minute
+    enabled: true
+
+# Logging configuration
+logging:
+  level: debug
+  file: "log/product_miner_test.log"

@@ -32,13 +32,22 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  # Uncomment to register a new dependency of your gem
-  # spec.add_dependency "example-gem", "~> 1.0"
+  # Runtime dependencies
+  spec.add_dependency "rest-client", "~> 2.1"
+  spec.add_dependency "sidekiq", "~> 7.2"
+  spec.add_dependency "sidekiq-cron", "~> 1.12"
+  spec.add_dependency "json", "~> 2.7"
+  spec.add_dependency "sequel", "~> 5.0"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
 
   # Development dependencies
-  spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'rspec', "~> 3.0"
+  spec.add_development_dependency 'rake', "~> 13.0"
+  spec.add_development_dependency 'rubocop', "~> 1.21"
+  spec.add_development_dependency 'rubocop-rspec', "~> 3.0"
+  spec.add_development_dependency 'webmock', "~> 3.0"
+  spec.add_development_dependency 'pg'
+  spec.add_development_dependency 'sqlite3', "~> 2.0"
 end
